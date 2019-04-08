@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta charset="utf-8">
+  <title>GrowPi - Timelapse</title>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Font Awsome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand"><a href="index.html">GROW PI</a></p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="Temperature"><a href="temp.html">TEMPERATURE</a></li>
+        <li id="Moisture"><a href="moisture.html">MOISTURE</a></li>
+        <li id="Timelapse"><a href="timelapse.html">TIMELAPSE</a></li>
+        <li id="contact"><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+
+<body>
+
+  <div class="container lastDiv">
+    <h1>Timelapse</h1>
+    <video width="600" controls>
+      <source src="timelapse.mp4" type="video/mp4">
+      Your browser does not support HTML5 video and or mp4.
+    </video>
+    <br>
+    <p>This video was created with <a href="https://github.com/graffenwalder/growPi/blob/master/timelapse.py">timelapse.py</a></p>
+    <p>This video gets updated at: 9:00, 15:00 and 21:00 UTC</p>
+    <h2 class="updating">NOT LIVE - NEW PROJECT COMING SOON</h2>
+  </div>
+
+  <footer id="footer">
+    <p>
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a>
+    </p>
+  </footer>
+
+</body>
+
+</html>

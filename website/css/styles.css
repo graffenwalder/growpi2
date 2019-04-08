@@ -1,0 +1,58 @@
+img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  width: 80%;
+}
+
+footer {
+  text-align: center;
+  margin-top: 10px;
+  background-color: #555;
+  color: white;
+  padding: 10px;
+  position: fixed;
+  height: 2.5em;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+video {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+a:link {
+  text-decoration: none;
+  color: grey;
+}
+
+a:visited {
+  text-decoration: none;
+  color: grey;
+}
+
+.description {
+  margin-top: 15px;
+}
+
+.foot-icon {
+  margin-right: 5px;
+}
+
+.graphDiv {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.lastDiv {
+  margin-bottom: 3em;
+}
+
+.updating {
+  color: red;
+  text-align: center;
+  /* display: none; */
+}
+
+#img-last {
+  margin-bottom: 10px;
+}

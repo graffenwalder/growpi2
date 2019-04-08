@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>GrowPi - Moisture</title>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Font Awsome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand"><a href="index.html">GROW PI</a></p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="Temperature"><a href="temp.html">TEMPERATURE</a></li>
+        <li id="Moisture"><a href="moisture.html">MOISTURE</a></li>
+        <li id="Timelapse"><a href="timelapse.html">TIMELAPSE</a></li>
+        <li id="contact"><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Ground Moisture</h1>
+  </div>
+  <div class="container graphDiv" id="moistDiv">
+  </div>
+
+  <script>
+    function makeplot() {
+      Plotly.d3.csv("temp.csv", function(data) {
+        processData(data);
+      });
+    }
+
+    function processData(allRows) {
+
+      var x = [],
+        moisture = [],
+        dryThresh = [],
+        water = [];
+
+      for (var i = 0; i < allRows.length; i++) {
+        row = allRows[i];
+        // Slicing: Thu Mar  7 22:04:31 2019 -> Mar  7 22:04
+        x.push(row.Time.slice(4, 16));
+        if (row.Moisture > 0) {
+          moisture.push(row.Moisture);
+        } else {
+          // Push previous value
+          moisture.push(moisture[moisture.length - 1])
+        }
+        dryThresh.push(300);
+        if (row.WaterGiven > 0) {
+          water.push({
+            'showarrow': true,
+            'text': (' + ' + (row.WaterGiven) + 'ml'),
+            'x': row.Time.slice(4, 16),
+            'y': row.Moisture,
+            'ay': 40
+          });
+        }
+      }
+      makePlotly(x, moisture, water, dryThresh);
+    }
+
+    function makePlotly(x, moisture, water, dryThresh) {
+      var plotDiv = document.getElementById("plot");
+      var traces = [{
+          x: x,
+          y: moisture,
+          name: "Moisture"
+        },
+        {
+          x: x,
+          y: dryThresh,
+          name: "Dry Threshold",
+          line: {
+            color: 'rgb(128, 0, 128)',
+            width: 2,
+            dash: 'dot'
+          }
+        }
+      ];
+
+      Plotly.newPlot('moistDiv', traces, {
+        annotations: water,
+        autosize: true,
+        showlegend: true,
+        legend: {
+          orientation: 'h',
+          y: 700
+        },
+        margin: {
+          l: 30,
+          r: 20,
+          b: 100,
+          t: 60,
+        }
+      });
+    }
+    makeplot();
+  </script>
+
+  <div class="description container lastDiv">
+    <p>Graph logs the ground moisture. When the ground moisture is lower than
+      300 it registers as "Dry". When there are 5 consecutive "Dry" intervals,
+      the waterpump activates and gives 50ml water.</p>
+    <h2 class="updating">NOT LIVE - NEW PROJECT COMING SOON</h2>
+  </div>
+
+  <footer id="footer">
+    <p>
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a>
+    </p>
+  </footer>
+</body>
+
+</html>

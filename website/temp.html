@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>GrowPi - Temperature</title>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Font Awsome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <p class="navbar-brand"><a href="index.html">GROW PI</a></p>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <!-- 6 -->
+        <li id="Temperature"><a href="temp.html">TEMPERATURE</a></li>
+        <li id="Moisture"><a href="moisture.html">MOISTURE</a></li>
+        <li id="Timelapse"><a href="timelapse.html">TIMELAPSE</a></li>
+        <li id="contact"><a href="contact.html">CONTACT</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Temperature vs Humidity</h1>
+  </div>
+
+  <div class="container graphDiv" id="tempDiv">
+
+  </div>
+
+  <script>
+    function makeplot() {
+      Plotly.d3.csv("temp.csv", function(data) {
+        processData(data);
+      });
+    }
+
+    function processData(allRows) {
+
+      var x = [],
+        temp = [],
+        pitemp = [],
+        hum = [];
+
+      for (var i = 0; i < allRows.length; i++) {
+        row = allRows[i];
+        // Slicing: Thu Mar  7 22:04:31 2019 -> Mar  7 22:04
+        x.push(row.Time.slice(4,16));
+        if (row.Temperature > 0) {
+          temp.push(row.Temperature);
+        } else {
+          // Push previous value
+          temp.push(temp[temp.length - 1])
+        }
+        if (row.Humidity > 30) {
+          hum.push(row.Humidity);
+        } else {
+          // Push previous value
+          hum.push(hum[hum.length - 1])
+        }
+        pitemp.push(row.PiTemperature);
+      }
+      makePlotly(x, temp, hum, pitemp);
+    }
+
+    function makePlotly(x, temp, hum, pitemp) {
+      var plotDiv = document.getElementById("plot");
+      var traces = [{
+          x: x,
+          y: temp,
+          name: "Temperature (°C)"
+        },
+        {
+          x: x,
+          y: hum,
+          name: "Humidity"
+        },
+        {
+          x: x,
+          y: pitemp,
+          name: "PiTemperature (°C)"
+        }
+      ];
+
+      Plotly.newPlot('tempDiv', traces, {
+        autosize: true,
+        showlegend: true,
+        legend: {
+          orientation: 'h',
+          y: 200
+        },
+        margin: {
+          l: 30,
+          r: 20,
+          b: 100,
+          t: 60,
+        }
+      });
+    }
+    makeplot();
+  </script>
+
+  <div class="description container lastDiv">
+    <p>Graph logs the humidity, room temperature and the temperature of the Raspberry Pi.</p>
+    <h2 class="updating">NOT LIVE - NEW PROJECT COMING SOON</h2>
+  </div>
+
+  <footer id="footer">
+    <p>
+      <i class="foot-icon fab fa-github"></i><a href="https://github.com/graffenwalder/growPi">Graffenwalder</a>
+    </p>
+  </footer>
+
+</body>
+
+</html>
