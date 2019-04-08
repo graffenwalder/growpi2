@@ -103,7 +103,7 @@ def uploadImage():
         ftp.storbinary('STOR ' + image, open(filename, 'rb'))
         ftp.quit()
 
-
+print("Waiting for first interal...")
 while True:
     try:
         # Start loop at every loopInterval minute of the hour
