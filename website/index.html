@@ -32,16 +32,14 @@
 <body>
   <div class="container lastDiv">
     <h1>GrowPi</h1>
-    <p>The GrowPi, is a Raspberry Pi 3B+, with a grovePi+. It has moisture, temperature, humidity and a sonic distance sensor.
+    <p>The GrowPi, is a Raspberry Pi 3B+, with a grovePi+. It has moisture, temperature and humidity sensors.
       <br>
       Every interval(10 mins):
       <ul>
         <li>It reads all sensor data</li>
         <li>Appends the data to a csv file</li>
-        <li>Displays data on the RGB LCD Display</li>
         <li>Uploads the CSV Data to this site</li>
         <li>Takes a picture, with the picamera, when lights are on and uploads it to this site</li>
-        <li>Waters the plant, when it logs 5 consecutive "dry intervals"</li>
       </ul>
     </p>
     <img src="plantsense.jpg" alt="growPi in action" class="img-rounded">

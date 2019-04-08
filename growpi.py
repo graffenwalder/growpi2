@@ -18,7 +18,6 @@ lightSensor = 1
 ledRed = 3
 tempSensor = 4
 
-dryIntervals = 5  # How many consecutive dry intervals before waterPlants
 loopInterval = 10  # How many minutes until next interval
 lightThreshold = 10  # Value above threshold is lightsOn
 
@@ -123,21 +122,9 @@ while True:
             # Turn on red LED when ground is dry and append moisture to waterCheck
             if moistureClass == 'Dry':
                 digitalWrite(ledRed, 1)
-                waterCheck.append(moisture)
-
-                # Get x consecutive dryIntervals, before waterPlants
-                if len(waterCheck) >= dryIntervals:
-                    waterPlants()
-                    waterGiven = waterAmount
-                    waterCheck = []
-                # Dry, but not enough dryIntervals for waterPlants
-                else:
-                    waterGiven = 0
 
             # Ground not Dry
             else:
-                waterCheck = []
-                waterGiven = 0
                 digitalWrite(ledRed, 0)
 
             # Take picture every loop, while lightsOn, store path in image variable
@@ -151,9 +138,6 @@ while True:
 
         # Lights off
         else:
-            waterCheck = []
-            waterGiven = 0
-
             # In case ground was dry, when lightsOn
             digitalWrite(ledRed, 0)
 
@@ -165,7 +149,6 @@ while True:
             uploadCSV()
 
     except KeyboardInterrupt:
-        digitalWrite(waterPump, 0)
         digitalWrite(ledRed, 0)
         print(" Shutdown safely")
         break
