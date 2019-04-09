@@ -25,7 +25,7 @@ localImagePath = '/home/pi/Desktop/images/'  # Where the images are stored
 # Write data to csv
 def appendCSV():
     fields = ['Time', 'Temperature', 'Humidity', 'Moisture', 'MoistureClass',
-              'Light', 'LightsOn', 'PiTemperature', 'Image', 'WaterGiven']
+              'Light', 'LightsOn', 'PiTemperature', 'Image']
     with open(r'temp.csv', 'a') as f:
         writer = csv.DictWriter(f, fieldnames=fields)
         writer.writerow({'Time': currentTime,
@@ -36,8 +36,7 @@ def appendCSV():
                          'Light': lightValue,
                          'LightsOn': lightsOn,
                          'PiTemperature': (piTemperature()),
-                         'Image': image,
-                         'WaterGiven': 0
+                         'Image': image
                          })
 
 
