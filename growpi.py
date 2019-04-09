@@ -7,7 +7,6 @@ import time
 
 from ftplib import FTP
 from grovepi import *
-from sleepto import *
 
 # Connect the Grove Moisture Sensor to analog port A0, Light Sensor to A1
 # Connect Red Led to D3, DHT22 Sensor to D4
@@ -18,7 +17,6 @@ lightSensor = 1
 ledRed = 3
 tempSensor = 4
 
-loopInterval = 10  # How many minutes until next interval
 lightThreshold = 10  # Value above threshold is lightsOn
 
 localImagePath = '/home/pi/Desktop/images/'  # Where the images are stored
@@ -73,6 +71,13 @@ def printSensorData():
         print("")
 
 
+def sleepTimer():
+    currentMinute = time.strftime("%M")
+    currentSecond = time.strftime("%S")
+    sleeptime = (10 - int(currentMinute[1])) * 60 - int(currentSecond)
+    time.sleep(sleeptime)
+
+
 def takePicture():
     timestamp = time.strftime("%Y-%m-%d--%H-%M")
     image = '{}.jpg'.format(timestamp)
@@ -103,11 +108,12 @@ def uploadImage():
         ftp.storbinary('STOR ' + image, open(filename, 'rb'))
         ftp.quit()
 
+
 print("Waiting for first interal...")
 while True:
     try:
-        # Start loop at every loopInterval minute of the hour
-        SleepTo.nextMinuteInterval(loopInterval)
+        # Start loop at every 10th minute of the hour
+        sleepTimer()
         # Get sensor readings
         lightValue = analogRead(lightSensor)
         moisture = analogRead(moistureSensor)

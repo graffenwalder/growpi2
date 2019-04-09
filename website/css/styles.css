@@ -50,7 +50,7 @@ a:visited {
 .updating {
   color: red;
   text-align: center;
-  /* display: none; */
+  display: none;
 }
 
 #img-last {
